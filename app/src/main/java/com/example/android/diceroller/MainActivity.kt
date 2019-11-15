@@ -19,36 +19,50 @@ package com.example.android.diceroller
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import com.example.android.diceroller.R.drawable
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-/**
- * DiceRoller demonstrates simple interactivity in an Android app.
- * It contains one button that updates a text view with a random
- * value between 1 and 6.
- */
 class MainActivity : AppCompatActivity() {
-
+    lateinit var diceImage1: ImageView
+    lateinit var diceImage2: ImageView
+    lateinit var rollButton: Button
+    lateinit var clearButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // Get the Button view from the layout and assign a click
-        // listener to it.
-        val rollButton: Button = findViewById(R.id.roll_button)
+        diceImage1 = dice_image1
+        diceImage2 = dice_image2
+        rollButton = roll_button
+        clearButton = clear_button
         rollButton.setOnClickListener { rollDice() }
+        clearButton.setOnClickListener { clearImages() }
+
     }
 
-    /**
-     * Click listener for the Roll button.
-     */
-    private fun rollDice() {
-        // Toast.makeText(this, "button clicked",
-        //  Toast.LENGTH_SHORT).show()
-        val randomInt = Random().nextInt(6) + 1
+    private fun getRandomDiceImage(): Int {
+        return when (Random().nextInt(6) + 1) {
+            1 -> drawable.dice_1
+            2 -> drawable.dice_2
+            3 -> drawable.dice_3
+            4 -> drawable.dice_4
+            5 -> drawable.dice_5
+            else -> drawable.dice_6
+        }
+    }
 
-        val resultText: TextView = findViewById(R.id.result_text)
-        resultText.text = randomInt.toString()
+    private fun rollDice() {
+        diceImage1.setImageResource(getRandomDiceImage())
+        diceImage2.setImageResource(getRandomDiceImage())
+    }
+
+    private fun clearImages() {
+        diceImage1.setImageResource(drawable.empty_dice)
+        diceImage2.setImageResource(drawable.empty_dice)
     }
 }

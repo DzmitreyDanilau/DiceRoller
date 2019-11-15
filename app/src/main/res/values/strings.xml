@@ -19,4 +19,5 @@
 
     <!-- Button label -->
     <string name="roll_label">Roll</string>
+    <string name="clear_button">Clear</string>
 </resources>
